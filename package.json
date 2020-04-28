@@ -1,0 +1,25 @@
+{
+  "name": "vehicles-db",
+  "version": "1.0.0",
+  "description": "Add and retrieve vehicles information from database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "aws",
+    "dynamodb",
+    "lambda",
+    "serverless"
+  ],
+  "author": "\"Stefano Castagnetta \\ <s.castagnetta@reply.it\\>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^13.13.4",
+    "aws-sdk": "^2.661.0",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
