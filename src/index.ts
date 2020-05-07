@@ -3,7 +3,7 @@ import * as AWS from 'aws-sdk';
 
 // Import external files
 import {VehicleDetails} from './myInterfaces'
-import { TransformEvent, PutItemDDB, GetItemDDB } from './utils'
+import { PutItemDDB, GetItemDDB } from './utils'
 
 // Set the region 
 AWS.config.update({region: 'eu-west-1'});
@@ -13,18 +13,18 @@ exports.handler = async (event: any, context: any) => {
 
   if (event.httpMethod == "PUT"){
     // Write item to table
-    const vehicleDetails = TransformEvent(event);   // Map event to vehicle information
+    const vehicleDetails: VehicleDetails = JSON.parse(event.body);    // Get vehicle information from event body
 
     const tableName = "vehicles";  // DynamoDB table name
     
     const response = PutItemDDB(tableName, vehicleDetails);  // Add item to the DynamoDB table
   
-    return response;
+    return response; 
   }
 
   if(event.httpMethod == "GET"){
     // Read item from the table
-    const key = event.pathParameters;  // Get item key from event
+    const key = event.pathParameters;  // Get item key from event path parameter
 
     const tableName = "vehicles";   // DynamoDB table name
 

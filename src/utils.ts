@@ -1,25 +1,6 @@
 import * as AWS from 'aws-sdk';
 import {VehicleDetails, Response, ReadParams, WriteParams} from './myInterfaces'
 
-export function TransformEvent(event: any){
-
-    const eventBody: VehicleDetails = JSON.parse(event.body);
-
-    // Mapping
-    const vehicleDetails: VehicleDetails = {
-        vin: eventBody.vin,
-        maker: eventBody.maker,
-        brand: eventBody.brand,
-        model: eventBody.model,
-        plate: eventBody.plate,
-        color: eventBody.color,
-        status: eventBody.status
-        // status: {odometer, unit}
-        }
-
-    return vehicleDetails;
-}
-
 export const PutItemDDB = async (tableName: string, item: VehicleDetails) => {
 
     // Define DynamoDB object as a documentclient to use more readable JSON format
@@ -47,17 +28,17 @@ export const PutItemDDB = async (tableName: string, item: VehicleDetails) => {
     const response: Response = {
     statusCode: statusCode,
     headers: {
-        "myHeader": "Test"
+        "myHeader": "test"
     },
     body: responseBody
     }
     return response;
 }
 
-export const GetItemDDB = async (tableName: string, key: { vin: string }) => {
+export const GetItemDDB = async (tableName: string, key: { vin: string }): Promise<Response> => {
     
     // Define DynamoDB object as a documentclient to use more readable JSON format
-    const documentClient = new AWS.DynamoDB.DocumentClient({region: 'eu-west-1'});    
+    const documentClient = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});    
 
     let responseBody: string = "";
     let statusCode: number = 0;
@@ -78,13 +59,13 @@ export const GetItemDDB = async (tableName: string, key: { vin: string }) => {
           statusCode = 403;
         }
   
-        const response: Response = {
-          statusCode: statusCode,
-          headers: {
-            "myHeader": "test"
-          },
-          body: responseBody
-        }
+    const response: Response = {
+        statusCode: statusCode,
+        headers: {
+        "myHeader": "test"
+        },
+        body: responseBody
+    }
 
     return response
 }
